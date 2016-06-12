@@ -1,20 +1,14 @@
 import java.util.List;
 
 class Students{
-    private String fullName;
     private String firstName;
     private String lastName;
     private String email;
     private String phone;
     private String fNumber;
-    private int facultyNumber;
     private int group;
     private int age;
     private List<Integer> marks;
-
-    public String getFullName() {
-        return fullName;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -36,10 +30,6 @@ class Students{
         return fNumber;
     }
 
-    public int getFacultyNumber() {
-        return facultyNumber;
-    }
-
     public List<Integer> getMarks() {
         return marks;
     }
@@ -50,10 +40,6 @@ class Students{
 
     public int getAge() {
         return age;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public void setFirstName(String firstName) {
@@ -74,10 +60,6 @@ class Students{
 
     public void setfNumber(String fNumber) {
         this.fNumber = fNumber;
-    }
-
-    public void setFacultyNumber(int facultyNumber) {
-        facultyNumber = facultyNumber;
     }
 
     public void setGroup(int group) {

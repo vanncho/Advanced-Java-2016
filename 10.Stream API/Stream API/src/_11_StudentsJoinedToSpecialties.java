@@ -1,16 +1,15 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class _11_StudentsJoinedToSpecialties {
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         List<StudentSpecialty> listOfSpecialties = new ArrayList<>();
-        List<Students> listOfStudents = new ArrayList<>();
+        List<StudentsClass> listOfStudents = new ArrayList<>();
 
         while (true){
             String line = br.readLine();
@@ -25,8 +24,8 @@ public class _11_StudentsJoinedToSpecialties {
                 int facultyNumber = Integer.valueOf(specialtiesTokens[2]);
 
                 StudentSpecialty specialty = new StudentSpecialty();
-                specialty.setSpecialtyName(specialtie);
-                specialty.setFacultyNumber(facultyNumber);
+                specialty.setSpecialityName(specialtie);
+                specialty.setFNumber(facultyNumber);
 
                 listOfSpecialties.add(specialty);
                 line = br.readLine();
@@ -41,12 +40,12 @@ public class _11_StudentsJoinedToSpecialties {
                     break;
                 }
                 String[] studentsTokens = line.split("[\\s]+");
-                int studentNumber = Integer.valueOf(studentsTokens[0]);
                 String studentName = studentsTokens[1] + " " + studentsTokens[2];
+                int studentNumber = Integer.valueOf(studentsTokens[0]);
 
-                Students student = new Students();
-                student.setFullName(studentName);
-                student.setFacultyNumber(studentNumber);
+                StudentsClass student = new StudentsClass();
+                student.setName(studentName);
+                student.setFacNum(studentNumber);
 
                 listOfStudents.add(student);
             }
@@ -56,28 +55,60 @@ public class _11_StudentsJoinedToSpecialties {
             }
         }
 
+        List<String>  collectedData = new ArrayList<>();
+        listOfStudents.stream().flatMap(student -> listOfSpecialties.stream().filter(speciality -> {
+            if (student.getFacNum() == speciality.getFNumber()){
+                collectedData.add(String.format("%s %d %s", student.getName(), student.getFacNum(), speciality.getSpecialityName()));
+            }
 
-        // ПРОЧЕЛ СЪМ ВХОДА, ОСТАВА само логиката!!!
+            return student.getFacNum() == speciality.getFNumber();
+        })).collect(Collectors.toList());
+
+        collectedData
+                .stream()
+                .sorted((s1, s2) -> s1.compareTo(s2))
+                .forEach(System.out::println);
+    }
+}
+
+class StudentsClass {
+    private String name;
+    private int facNum;
+
+    public String getName() {
+        return name;
+    }
+
+    public int getFacNum() {
+        return facNum;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setFacNum(int facNum) {
+        this.facNum = facNum;
     }
 }
 
 class StudentSpecialty {
-    private String specialtyName;
-    private int facultyNumber;
+    private String specialityName;
+    private int fNumber;
 
-    public String getSpecialtyName() {
-        return specialtyName;
+    public String getSpecialityName() {
+        return specialityName;
     }
 
-    public int getFacultyNumber() {
-        return facultyNumber;
+    public int getFNumber() {
+        return fNumber;
     }
 
-    public void setFacultyNumber(int facultyNumber) {
-        this.facultyNumber = facultyNumber;
+    public void setSpecialityName(String specialityName) {
+        this.specialityName = specialityName;
     }
 
-    public void setSpecialtyName(String specialtyName) {
-        this.specialtyName = specialtyName;
+    public void setFNumber(int fNumber) {
+        this.fNumber = fNumber;
     }
 }
