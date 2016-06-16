@@ -1,9 +1,11 @@
-package lab.StaticData;
+package lab;
 
 import lab.IO.IOManager;
 import lab.IO.OutputWriter;
 import lab.Judge.Tester;
+import lab.Network.DownloadManager;
 import lab.Repository.StudentsRepository;
+import lab.StaticData.SessionData;
 
 import java.awt.*;
 import java.io.File;
@@ -44,10 +46,10 @@ public class CommandInterpreter {
                 tryPrintOrderedStudents(input, data);
                 break;
             case "download":
-                downloadFile(data);
+                tryDownloadFile(input, data);
                 break;
             case "downloadAsynch":
-                downloadFileAsync(data);
+                tryDownloadFileOnNewThread(input, data);
                 break;
             case "help":
                 // TODO:
@@ -200,11 +202,22 @@ public class CommandInterpreter {
         StudentsRepository.printFilteredStudents(course, filter, numberOfStudents);
     }
 
-    private static void downloadFileAsync(String[] data) {
-        // TODO
+    private static void tryDownloadFileOnNewThread(String input, String[] data) {
+        if (data.length != 2){
+            displayInvalidCommandMessage(input);
+            return;
+        }
+        String fileUrl = data[1];
+        DownloadManager.downloadOnNewThread(fileUrl);
     }
 
-    private static void downloadFile(String[] data) {
-        // TODO
+    private static void tryDownloadFile(String input, String[] data) {
+        if (data.length != 2){
+            displayInvalidCommandMessage(input);
+            return;
+        }
+
+        String fileUrl = data[1];
+        DownloadManager.download(fileUrl);
     }
 }
